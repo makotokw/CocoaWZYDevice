@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/makotokw/CocoaWZDeviceId.git" }
 
   s.platform     = :ios, '5.0'
-  s.source_files = '*.{h,m}'
+  s.source_files = 'Classes/*.{h,m}'
   s.framework    = 'Security'
   s.requires_arc = true
 end
