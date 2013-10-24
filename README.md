@@ -1,4 +1,4 @@
-CocoaWZDeviceId
+CocoaWZDevice
 ========
 
 ## Installation
@@ -6,10 +6,10 @@ CocoaWZDeviceId
 by CocoaPods
 
 ```ruby:Podfile
-pod 'WZDeviceId', :git => 'https://github.com/makotokw/CocoaWZDeviceId.git'
+pod 'WZDevice/DeviceId', :git => 'https://github.com/makotokw/CocoaWZDevice.git'
 ```
 
-## Usage
+## Usage: DeviceId
 
 ```
 #import "UIDevice+WZDeviceId.h"

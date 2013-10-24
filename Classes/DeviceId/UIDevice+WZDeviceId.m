@@ -1,6 +1,6 @@
 //
 //  UIDevice+WZDeviceId.m
-//  WZDeviceId
+//  WZDevice
 //
 //  Copyright (c) 2013 makoto_kw, Inc. All rights reserved.
 //
