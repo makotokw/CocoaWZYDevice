@@ -91,13 +91,13 @@ NSString* const WZDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
     return data;
 }
 
-+ (void)setDataToKeychain:(NSData *)data forKey:(NSString *)key service:(NSString *)service accessible:(CFTypeRef)accessible error:(NSError **)error
++ (BOOL)setDataToKeychain:(NSData *)data forKey:(NSString *)key service:(NSString *)service accessible:(CFTypeRef)accessible error:(NSError **)error
 {
     if (!key || !service) {
         if (error != nil) {
             *error = [NSError errorWithDomain:WZDeviceIdErrorDomain code:0 userInfo:nil];
         }
-        return;
+        return NO;
     }
     
     NSMutableDictionary* query = [NSMutableDictionary dictionary];
@@ -130,16 +130,18 @@ NSString* const WZDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
         if (error) {
             *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
         }
+        return NO;
     }
+    return YES;
 }
 
-+ (void)removeDataFormKeychainForKey:(NSString *)key service:(NSString *)service error:(NSError **)error
++ (BOOL)removeDataFormKeychainForKey:(NSString *)key service:(NSString *)service error:(NSError **)error
 {
     if (!key || !service) {
         if (error) {
             *error = [NSError errorWithDomain:WZDeviceIdErrorDomain code:0 userInfo:nil];
         }
-        return;
+        return NO;
     }
     
     NSMutableDictionary *itemToDelete = [NSMutableDictionary dictionary];
@@ -154,7 +156,9 @@ NSString* const WZDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
         if (error) {
             *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
         }
+        return NO;
     }
+    return YES;
 }
 
 @end
