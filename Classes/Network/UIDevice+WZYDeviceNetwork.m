@@ -1,18 +1,18 @@
 //
-//  UIDevice+WZDeviceNetwork.m
-//  WZDevice
+//  UIDevice+WZYDeviceNetwork.m
+//  WZYDevice
 //
 //  Copyright (c) 2013 makoto_kw, Inc. All rights reserved.
 //
 
-#import "UIDevice+WZDeviceNetwork.h"
+#import "UIDevice+WZYDeviceNetwork.h"
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>
 
-@implementation UIDevice (WZDeviceNetwork)
+@implementation UIDevice (WZYDeviceNetwork)
 
-- (NSString *)IPAddress
+- (NSString *)wzy_IPAddress
 {
     NSString       *address    = @"";
     struct ifaddrs *interfaces = NULL;

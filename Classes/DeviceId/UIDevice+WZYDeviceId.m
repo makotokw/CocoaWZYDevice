@@ -1,30 +1,30 @@
 //
-//  UIDevice+WZDeviceId.m
-//  WZDevice
+//  UIDevice+WZYDeviceId.m
+//  WZYDevice
 //
 //  Copyright (c) 2013 makoto_kw, Inc. All rights reserved.
 //
 
-#import "UIDevice+WZDeviceId.h"
+#import "UIDevice+WZYDeviceId.h"
 
-NSString* const WZDeviceIdUUIDKey = @"UUID";
-NSString* const WZDeviceIdUUIDOnlyDeviceKey = @"UUIDOnlyDevice";
-NSString* const WZDeviceIdService = @"com.makotokw.ios.wheezy.deviceid";
-NSString* const WZDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
+NSString* const WZYDeviceIdUUIDKey = @"UUID";
+NSString* const WZYDeviceIdUUIDOnlyDeviceKey = @"UUIDOnlyDevice";
+NSString* const WZYDeviceIdService = @"com.makotokw.ios.wheezy.deviceid";
+NSString* const WZYDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
 
-@implementation UIDevice (WZDeviceId)
+@implementation UIDevice (WZYDeviceId)
 
-@dynamic deviceUUID, deviceUUIDOnlyDevice;
+@dynamic wzy_deviceUUID, wzy_deviceUUIDOnlyDevice;
 
-- (NSString *)deviceUUID
+- (NSString *)wzy_deviceUUID
 {
     NSError *error = nil;
-    NSData *uuidData = [UIDevice getDataFromKeychainForKey:WZDeviceIdUUIDKey service:WZDeviceIdService error:&error];
+    NSData *uuidData = [UIDevice getDataFromKeychainForKey:WZYDeviceIdUUIDKey service:WZYDeviceIdService error:&error];
     if (uuidData.length == 0) {
         CFUUIDRef uuid = CFUUIDCreate(nil);
         CFUUIDBytes uuidBytes = CFUUIDGetUUIDBytes(uuid);
         uuidData = [NSData dataWithBytes:&uuidBytes length:sizeof(uuidBytes)];
-        [UIDevice setDataToKeychain:uuidData forKey:WZDeviceIdUUIDKey service:WZDeviceIdService accessible:kSecAttrAccessibleAlwaysThisDeviceOnly error:&error];
+        [UIDevice setDataToKeychain:uuidData forKey:WZYDeviceIdUUIDKey service:WZYDeviceIdService accessible:kSecAttrAccessibleAlwaysThisDeviceOnly error:&error];
         if (error) {
             uuidData = nil;
         }
@@ -32,15 +32,15 @@ NSString* const WZDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
     return [self hexStringWithData:uuidData];
 }
 
-- (NSString *)deviceUUIDOnlyDevice
+- (NSString *)wzy_deviceUUIDOnlyDevice
 {
     NSError *error = nil;
-    NSData *uuidData = [UIDevice getDataFromKeychainForKey:WZDeviceIdUUIDOnlyDeviceKey service:WZDeviceIdService error:&error];
+    NSData *uuidData = [UIDevice getDataFromKeychainForKey:WZYDeviceIdUUIDOnlyDeviceKey service:WZYDeviceIdService error:&error];
     if (uuidData.length == 0) {
         CFUUIDRef uuid = CFUUIDCreate(nil);
         CFUUIDBytes uuidBytes = CFUUIDGetUUIDBytes(uuid);
         uuidData = [NSData dataWithBytes:&uuidBytes length:sizeof(uuidBytes)];
-        [UIDevice setDataToKeychain:uuidData forKey:WZDeviceIdUUIDKey service:WZDeviceIdService accessible:kSecAttrAccessibleAlways error:&error];
+        [UIDevice setDataToKeychain:uuidData forKey:WZYDeviceIdUUIDKey service:WZYDeviceIdService accessible:kSecAttrAccessibleAlways error:&error];
         if (error) {
             uuidData = nil;
         }
@@ -67,7 +67,7 @@ NSString* const WZDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
 {
     if (!key || !service) {
         if (error) {
-            *error = [NSError errorWithDomain:WZDeviceIdErrorDomain code:0 userInfo:nil];
+            *error = [NSError errorWithDomain:WZYDeviceIdErrorDomain code:0 userInfo:nil];
         }
         return nil;
     }
@@ -95,7 +95,7 @@ NSString* const WZDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
 {
     if (!key || !service) {
         if (error != nil) {
-            *error = [NSError errorWithDomain:WZDeviceIdErrorDomain code:0 userInfo:nil];
+            *error = [NSError errorWithDomain:WZYDeviceIdErrorDomain code:0 userInfo:nil];
         }
         return NO;
     }
@@ -139,7 +139,7 @@ NSString* const WZDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
 {
     if (!key || !service) {
         if (error) {
-            *error = [NSError errorWithDomain:WZDeviceIdErrorDomain code:0 userInfo:nil];
+            *error = [NSError errorWithDomain:WZYDeviceIdErrorDomain code:0 userInfo:nil];
         }
         return NO;
     }
