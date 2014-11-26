@@ -56,7 +56,7 @@ NSString* const WZYDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
     NSMutableString *stringBuffer = [NSMutableString stringWithCapacity:data.length * 2];
     const unsigned char *dataBuffer = (const unsigned char *)data.bytes;
     for (int i=0; i<data.length; i++) {
-        [stringBuffer appendFormat:@"%02X", (NSUInteger)dataBuffer[i]];
+        [stringBuffer appendFormat:@"%02X", (int)dataBuffer[i]];
     }
     return stringBuffer;
 }
@@ -71,7 +71,7 @@ NSString* const WZYDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
         }
         return nil;
     }
-    
+
     NSMutableDictionary* query = [NSMutableDictionary dictionary];
     query[(__bridge __strong id)(kSecClass)] = (__bridge id)(kSecClassGenericPassword);
     query[(__bridge __strong id)(kSecReturnData)] = (__bridge id)(kCFBooleanTrue);
@@ -79,7 +79,7 @@ NSString* const WZYDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
     query[(__bridge __strong id)(kSecAttrService)] = service;
     query[(__bridge __strong id)(kSecAttrGeneric)] = key;
     query[(__bridge __strong id)(kSecAttrAccount)] = key;
-    
+
     NSData *data = nil;
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)(void *)&data);
     if (status != errSecSuccess) {
@@ -99,13 +99,13 @@ NSString* const WZYDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
         }
         return NO;
     }
-    
+
     NSMutableDictionary* query = [NSMutableDictionary dictionary];
     query[(__bridge __strong id)(kSecClass)] = (__bridge id)(kSecClassGenericPassword);
     query[(__bridge __strong id)(kSecAttrService)] = service;
     query[(__bridge __strong id)(kSecAttrGeneric)] = key;
     query[(__bridge __strong id)(kSecAttrAccount)] = key;
-    
+
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, NULL);
     if (status == errSecSuccess) {
         if (data) {
@@ -123,7 +123,7 @@ NSString* const WZYDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
         attributes[(__bridge __strong id)(kSecAttrAccount)] = key;
         attributes[(__bridge __strong id)(kSecValueData)] = data;
         attributes[(__bridge __strong id)(kSecAttrAccessible)] = (__bridge id)(accessible);
-        
+
         status = SecItemAdd((__bridge CFDictionaryRef)attributes, NULL);
     }
     if (status != errSecSuccess) {
@@ -143,15 +143,15 @@ NSString* const WZYDeviceIdErrorDomain = @"com.makotokw.ios.wheezy.deviceid";
         }
         return NO;
     }
-    
+
     NSMutableDictionary *itemToDelete = [NSMutableDictionary dictionary];
     itemToDelete[(__bridge __strong id)(kSecClass)] = (__bridge id)(kSecClassGenericPassword);
     itemToDelete[(__bridge __strong id)(kSecAttrService)] = service;
     itemToDelete[(__bridge __strong id)(kSecAttrGeneric)] = key;
     itemToDelete[(__bridge __strong id)(kSecAttrAccount)] = key;
-    
+
     OSStatus status = SecItemDelete((__bridge CFDictionaryRef)itemToDelete);
-    
+
     if (status == errSecSuccess || status == errSecItemNotFound) {
         if (error) {
             *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
